@@ -14,6 +14,8 @@ If the eye is unhealthy, we'll also provide diseases that could factor into the 
 Identify areas of the eye that are unhealthy.
 
 ## The Data
+Data ranging from what's required for our MVP to wishlists for data pertaining to additional stages.
+
 
 ### MVP
 - RMFiD Training Labels: A CSV linking retina images to their health data; Disease Risk Binary Classification and 45 Disease Types.
@@ -21,7 +23,7 @@ Identify areas of the eye that are unhealthy.
 
 ### Data Needed For Project Expansion
 - General health data linked to diseases detailed in RMFiD Training Labels.
-
+-
 
 ## Targets
 Defined targets for all our output.
@@ -30,6 +32,10 @@ Defined targets for all our output.
 Disease Risk: Risk/Not At Risk; 1 or 0 - Binary Classification (M)
 45 Targets for Potential Disease Classification
 Identify Unhealthy Parts of an Eye
+
+### Preprocessing
+To help decide on which models to use:
+  [Pycaret](https://pycaret.org/)
 
 ### Models
 Computer Vision
