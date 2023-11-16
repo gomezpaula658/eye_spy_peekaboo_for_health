@@ -27,11 +27,11 @@ Data ranging from what's required for our MVP to wishlists for data pertaining t
 Defined targets for all our output.
 
 ### MVP
-Disease Risk: Risk/Not At Risk; 1 or 0 - Binary Classification
+Disease Risk: At Risk/Not At Risk; 1 or 0 - Binary Classification
 
 ### Additional Stages
-- 45 Targets for Potential Disease Classification
-- Identify Unhealthy Parts of an Eye; Multiple Targets
+- 45 Targets for Potential Disease Classification if eye health is At Risk.
+- Identify Unhealthy Parts of an At Risk Eye; multiple undefined targets.
 
 ## Libraries
 
