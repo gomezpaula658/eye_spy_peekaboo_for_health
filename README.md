@@ -37,8 +37,10 @@ Disease Risk: At Risk/Not At Risk; 1 or 0 - Binary Classification
 
 - [Pycaret](https://pycaret.org/); for data analysis and potential deployment.
 - [Numpy]();
+- [Pandas]();
+- [TensorFlow]();
+- [Keras]();
 
 
 ### Models
-Computer Vision
 CNN
