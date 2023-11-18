@@ -18,7 +18,7 @@ Data ranging from what's required for our MVP to wishlists for data pertaining t
 
 ### MVP
 - RMFiD Training Labels: A CSV linking retina images to their health data; Disease Risk Binary Classification and 45 Disease Types.
-- 32000 retina images.
+- 3200 retina images.
 
 ### Data Needed For Project Expansion
 - General health data linked to diseases detailed in RMFiD Training Labels.
