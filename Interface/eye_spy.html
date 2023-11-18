@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Spy</title>
+</head>
+<body>
+    <h1>Eye Spy</h1>
+
+    <style>
+      #thumbnail {
+          max-width: 300px;
+          max-height: 300px;
+      }
+    </style>
+
+    <img id="thumbnail" src="#" alt="Thumbnail Preview">
+    <br>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <!-- Create a form with an input of type "file" for image upload -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="imageUpload">Select an image:</label>
+        <input type="file" id="imageUpload" name="image" accept="image/*" onchange="displayThumbnail()">
+        <!-- The "accept" attribute limits the file types that can be selected to images -->
+
+        <br>
+
+        <!-- Add a submit button to submit the form -->
+        <input type="submit" value="Upload">
+    </form>
+
+    <script>
+      function displayThumbnail() {
+          var input = document.getElementById('imageUpload');
+          var thumbnail = document.getElementById('thumbnail');
+
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  thumbnail.src = e.target.result;
+              };
+
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+    </script>
+
+</body>
+</html>
