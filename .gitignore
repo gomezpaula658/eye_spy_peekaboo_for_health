@@ -1,1 +1,4 @@
 .DS_Store
+data/eval_images
+data/test_images
+data/training_images
