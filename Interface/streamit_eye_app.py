@@ -4,8 +4,17 @@ import numpy as np
 from io import StringIO
 
 def eye_interface():
+    """ Front page of the app displaying a form for the doctor to enter the patient name
+    and upload their eye scan image. The interface then return the result i.e healthy/not Healthy.
+    """
+    col1, col2, col3 = st.columns(3)
 
-    with st.form("my_form"):
+    with col1:
+        st.write("Column 1")
+
+    with col2:
+
+    with st.form("main_form"):
         st.title('Eye Spy')
 
         #st.text_area("Patient Name", value="Enter the patient name:")
@@ -32,12 +41,31 @@ def eye_interface():
             # dataframe = pd.read_csv(uploaded_file)
             # st.write(dataframe)
 
+
+
+
+
+        with col2:
+            st.markdown("<center><button>Click me!</button></center>", unsafe_allow_html=True)
+
+
         submitted = st.form_submit_button("Submit")
         if submitted:
-            st.image(uploaded_file, caption=patient)
-
-    #st.button("Get results", key="result_button", disabled=True)
+            st.image(uploaded_file, caption=f"{patient}'s eye image")
+            clicked = st.button("Get results", key="result_button")
+            if clicked:
+                st.write('Hello, *World!* :sunglasses:')
 
     return uploaded_file
+
+def get_results():
+    """ Get the result from the model for the downloaded image"""
+
+    # def write():
+    #     st.write('Hello, *World!* :sunglasses:')
+
+    # st.form_submit_buttonbutton("Get results", key="result_button", on_click=write)
+        ### CODE HERE TO GET THE RESULT FROM MODEL
+
 
 eye_interface()
