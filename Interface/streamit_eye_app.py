@@ -6,7 +6,7 @@ from io import StringIO
 def eye_interface():
     """ Front page of the app displaying a form for the doctor to enter the patient name
     and upload their eye scan image. The interface then return the result i.e healthy/not Healthy.
-    This function will return the downloaded image
+    This function will return the downloaded image.
     """
     #read css file
     with open("style.css") as f:
