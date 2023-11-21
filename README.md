@@ -16,6 +16,8 @@ Identify areas of the eye that are unhealthy.
 ## The Data
 Data ranging from what's required for our MVP to wishlists for data pertaining to additional stages.
 
+[Dataset available here.](https://www.mdpi.com/2306-5729/6/2/14)
+
 ### MVP
 - RMFiD Training Labels: A CSV linking retina images to their health data; Disease Risk Binary Classification and 45 Disease Types.
 - 3200 retina images.
