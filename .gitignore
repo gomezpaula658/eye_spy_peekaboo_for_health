@@ -1,1 +1,11 @@
+<<<<<<< HEAD
 raw_data/
+=======
+.DS_Store
+data/eval_images
+raw_data
+data/test_images
+data/training_images
+projprog.ipynb
+.ipynb_checkpoints
+>>>>>>> 6954b5f06aa4fd2b94f5df584d8e865a2ee53fa2
