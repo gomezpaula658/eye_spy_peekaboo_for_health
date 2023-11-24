@@ -37,7 +37,8 @@ with st.container():
     if submitted:
         st.image(uploaded_file, caption=f"{patient}'s eye image")
         #code to show processing
-        # st.write("")
+        st.write("Healthy")
+        #st.markdown(f"<center><p>{st.write('Healthy')}</p></center>", unsafe_allow_html=True)
         # st.write("Classifying...")
         #call predict function from model
         # label = predict(uploaded_file)
