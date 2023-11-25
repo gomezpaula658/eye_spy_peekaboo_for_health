@@ -5,6 +5,8 @@ from keras.callbacks import EarlyStopping
 import numpy as np
 from typing import Tuple
 from keras.callbacks import EarlyStopping
+from preprocessor import load_and_preprocess_images
+import pandas as pd
 
 
 def initialize_model(input_shape: tuple) -> Model:
@@ -16,18 +18,12 @@ def initialize_model(input_shape: tuple) -> Model:
     x = MaxPooling2D(2, 2)(x)
     x = Flatten()(x)
 
-
-    row_input = Input(shape=input_shape)
-    y = Dense(64, activation='relu')(row_input)
-
-    combined = concatenate([x, y])
-
-    z = Dense(12, activation='relu')(combined)
+    z = Dense(12, activation='relu')(x)
     z = Dense(64, activation='relu')(z)
     z = Dense(1, activation='sigmoid')(z)
 
 
-    model = Model(inputs=[image_input, row_input], outputs=z)
+    model = Model(inputs=image_input, outputs=z)
 
     print("✅ Model initialized")
 
@@ -49,11 +45,11 @@ def compile_model(model: Model, learning_rate=0.0005) -> Model:
 
 
 def train_model(model: Model,
-        X: np.ndarray,
-        y: np.ndarray,
+        images,
+        y,
         batch_size=32,
         patience=2,
-        validation_data=None, #([eval_images, X_eval], y_eval) #override validation split
+        validation_data=None, #override validation split
         validation_split=0.3
     ) -> Tuple[Model, dict]:
     """
@@ -66,9 +62,9 @@ def train_model(model: Model,
     verbose=0
     )
 
+
     history = model.fit(
-    X,
-    y,
+    images, y,
     validation_data=validation_data,
     epochs=100,
     batch_size=batch_size,
