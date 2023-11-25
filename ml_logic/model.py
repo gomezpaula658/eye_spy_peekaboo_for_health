@@ -1,5 +1,6 @@
 from tensorflow import keras
 from keras import Model, Sequential, layers, regularizers, optimizers
+from keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Input, concatenate
 from keras.callbacks import EarlyStopping
 import numpy as np
 
