@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from tensorflow import keras
-from keras.preprocessing.image import img_to_array
+from keras.utils import img_to_array
 from PIL import Image
 from keras import Model, Sequential, layers
 import pandas as pd
@@ -41,7 +41,7 @@ def data_balancing():
         img_dict_unhealthy[id_no] = img
     # Return both dictionaries.
     return (img_dict_healthy, img_dict_unhealthy)
-  
+
 
 def create_augmented_model(input_shape=(150, 150, 3)):
 
@@ -57,4 +57,3 @@ def create_augmented_model(input_shape=(150, 150, 3)):
     model.add(layers.RandomRotation(0.1))
 
     return model
-
