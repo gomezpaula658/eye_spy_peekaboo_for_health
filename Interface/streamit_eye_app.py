@@ -17,6 +17,13 @@ from ml_logic.preprocessor import load_and_preprocess_image
 
 def predict(image_processed):
     """Display the result"""
+    prediction_result = model.predict(image_processed)
+    #getting class index with highest probability 
+    first_probability, second_probability = prediction_result
+    if first_probability > second_probability:
+        return "Healthy"
+    else:
+        return "Unhealthy"
     #return result from the model
     #load trained model saved
     #call built-in predict funtion on model
@@ -38,7 +45,13 @@ with st.container():
     if submitted:
         st.image(uploaded_file, caption=f"{patient}'s eye image")
         #code to show processing
-        st.write("Healthy")
+        with st.spinner('Classifying...'):
+            #perform prediction
+            prediction_result = predict(image)
+            
+        #Display prediction result
+        st.write(f"Precition: {prediction_result}")
+        
         #st.markdown(f"<center><p>{st.write('Healthy')}</p></center>", unsafe_allow_html=True)
         # st.write("Classifying...")
         #call predict function from model
