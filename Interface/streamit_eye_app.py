@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from io import StringIO
 from PIL import Image
+from ml_logic.preprocessor import load_and_preprocess_image
 
 
 ## Front page of the app displaying a form for the doctor to enter the patient name
@@ -30,7 +31,7 @@ with st.container():
     if uploaded_file is not None:
     # To read file as bytes:
         #bytes_data = uploaded_file.getvalue()
-        image = Image.open(uploaded_file)
+        image = load_and_preprocess_image(uploaded_file)
 
     submitted = st.button("Submit", key="submit_button")
 
@@ -41,5 +42,5 @@ with st.container():
         #st.markdown(f"<center><p>{st.write('Healthy')}</p></center>", unsafe_allow_html=True)
         # st.write("Classifying...")
         #call predict function from model
-        # label = predict(uploaded_file)
+        # label = predict(image)
         # st.write('%s (%.2f%%)' % (label[1], label[2]*100))
