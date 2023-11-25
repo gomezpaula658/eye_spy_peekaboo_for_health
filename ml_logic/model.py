@@ -16,18 +16,12 @@ def initialize_model(input_shape: tuple) -> Model:
     x = MaxPooling2D(2, 2)(x)
     x = Flatten()(x)
 
-
-    row_input = Input(shape=input_shape)
-    y = Dense(64, activation='relu')(row_input)
-
-    combined = concatenate([x, y])
-
-    z = Dense(12, activation='relu')(combined)
+    z = Dense(12, activation='relu')(x)
     z = Dense(64, activation='relu')(z)
     z = Dense(1, activation='sigmoid')(z)
 
 
-    model = Model(inputs=[image_input, row_input], outputs=z)
+    model = Model(inputs=image_input, outputs=z)
 
     print("✅ Model initialized")
 
