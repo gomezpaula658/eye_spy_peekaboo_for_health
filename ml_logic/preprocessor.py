@@ -1,18 +1,28 @@
 import os
 import numpy as np
 from tensorflow import keras
-from keras.utils import img_to_array
+from keras.utils import img_to_array, load_img
 from PIL import Image
 from keras import Model, Sequential, layers
 import pandas as pd
 
-def load_and_preprocess_image(uploaded_image):
+def load_and_preprocess_image_uploaded(uploaded_image):
     """
     Load and preprocess an image given its ID.
     """
     image = Image.open(uploaded_image)
     image = img_to_array(image)
     image = image / 255.0  # Normalize to [0, 1]
+    return image
+
+def load_and_preprocess_images(image_id, image_folder, target_size=(224, 224)):
+    """
+    Load and preprocess an image given its ID.
+    """
+    image_path = os.path.join(image_folder, f'{image_id}.png')
+    image = load_img(image_path, target_size=target_size)
+    image = img_to_array(image)
+    image = image / 255.0
     return image
 
 # Create a function to balance the data.
