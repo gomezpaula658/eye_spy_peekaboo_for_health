@@ -42,5 +42,5 @@ with st.container():
         #st.markdown(f"<center><p>{st.write('Healthy')}</p></center>", unsafe_allow_html=True)
         # st.write("Classifying...")
         #call predict function from model
-        # label = predict(uploaded_file)
+        # label = predict(image)
         # st.write('%s (%.2f%%)' % (label[1], label[2]*100))
