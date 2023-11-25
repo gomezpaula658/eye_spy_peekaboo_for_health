@@ -15,12 +15,12 @@ from ml_logic.preprocessor import load_and_preprocess_image
 #     st.markdown(f'<style>{f.read()}</style', unsafe_allow_html=True)
 
 
-def display_results():
+def predict(image_processed):
     """Display the result"""
-    #Tempory function to test interface behaviour
-    result = "Healthy"
-    st.markdown(f"<center><p>{result}</p></center>", unsafe_allow_html=True)
-    #return result
+    #return result from the model
+    #load trained model saved
+    #call built-in predict funtion on model
+    #return result that has bigger prob
 
 
 with st.container():
