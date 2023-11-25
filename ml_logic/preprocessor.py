@@ -19,7 +19,7 @@ def load_and_preprocess_image(uploaded_image):
     return image
 
 # Create a function to balance the data.
-def data_balancing(table_link='../Data/'):
+def data_balancing(table_link='../data/'):
     '''
     This function loads the raw data and returns a balanced dataset as two
     dictionaries.
