@@ -4,6 +4,7 @@ import numpy as np
 from io import StringIO
 from PIL import Image
 from ml_logic.preprocessor import load_and_preprocess_image
+from ml_logic.registry import load_model
 
 
 ## Front page of the app displaying a form for the doctor to enter the patient name
@@ -17,17 +18,14 @@ from ml_logic.preprocessor import load_and_preprocess_image
 
 def predict(image_processed):
     """Display the result"""
+    model = load_model()
     prediction_result = model.predict(image_processed)
-    #getting class index with highest probability 
+    #getting class index with highest probability
     first_probability, second_probability = prediction_result
     if first_probability > second_probability:
         return "Healthy"
     else:
         return "Unhealthy"
-    #return result from the model
-    #load trained model saved
-    #call built-in predict funtion on model
-    #return result that has bigger prob
 
 
 with st.container():
@@ -48,10 +46,10 @@ with st.container():
         with st.spinner('Classifying...'):
             #perform prediction
             prediction_result = predict(image)
-            
+
         #Display prediction result
         st.write(f"Precition: {prediction_result}")
-        
+
         #st.markdown(f"<center><p>{st.write('Healthy')}</p></center>", unsafe_allow_html=True)
         # st.write("Classifying...")
         #call predict function from model
