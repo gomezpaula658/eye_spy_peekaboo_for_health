@@ -3,6 +3,6 @@ raw_data/
 data/eval_images
 raw_data
 data/test_images
-data/training_images
+data/train_images
 projprog.ipynb
 .ipynb_checkpoints
