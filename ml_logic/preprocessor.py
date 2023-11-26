@@ -4,18 +4,29 @@ from tensorflow import keras
 # from keras.preprocessing.image import img_to_array
 from tensorflow.keras.utils import img_to_array
 from tensorflow.keras.preprocessing.image import load_img
+from keras.utils import img_to_array, load_img
 from PIL import Image
 from keras import Model, Sequential, layers
 import pandas as pd
 from keras.preprocessing import image
 
-def load_and_preprocess_image(uploaded_image):
+def load_and_preprocess_image_uploaded(uploaded_image):
     """
     Load and preprocess an image given its ID.
     """
     image = Image.open(uploaded_image)
     image = img_to_array(image)
     image = image / 255.0  # Normalize to [0, 1]
+    return image
+
+def load_and_preprocess_images(image_id, image_folder, target_size=(224, 224)):
+    """
+    Load and preprocess an image given its ID.
+    """
+    image_path = os.path.join(image_folder, f'{image_id}.png')
+    image = load_img(image_path, target_size=target_size)
+    image = img_to_array(image)
+    image = image / 255.0
     return image
 
 # Create a function to balance the data.
@@ -49,11 +60,11 @@ def create_augmented_model(input_shape=(150, 150, 3)):
     Image augmnetation function Layers
     """
 
-    data_augmentation = Sequential()
-    data_augmentation.add(layers.Rescaling(1./255, input_shape=input_shape))
-    data_augmentation.add(layers.RandomFlip("horizontal"))
-    data_augmentation.add(layers.RandomZoom(0.1))
-    data_augmentation.add(layers.RandomTranslation(0.2, 0.2))
-    data_augmentation.add(layers.RandomRotation(0.1))
+    model = Sequential()
+    model.add(layers.Rescaling(1./255, input_shape=input_shape))
+    model.add(layers.RandomFlip("horizontal"))
+    model.add(layers.RandomZoom(0.1))
+    model.add(layers.RandomTranslation(0.2, 0.2))
+    model.add(layers.RandomRotation(0.1))
 
-    return data_augmentation
+    return model
