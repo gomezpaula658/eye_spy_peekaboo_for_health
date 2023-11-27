@@ -2,8 +2,6 @@ import os
 import numpy as np
 from tensorflow import keras
 # from keras.preprocessing.image import img_to_array
-from tensorflow.keras.utils import img_to_array
-from tensorflow.keras.preprocessing.image import load_img
 from keras.utils import img_to_array, load_img
 from PIL import Image
 from keras import Model, Sequential, layers
