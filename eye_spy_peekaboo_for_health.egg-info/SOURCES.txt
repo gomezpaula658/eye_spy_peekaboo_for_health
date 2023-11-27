@@ -6,23 +6,21 @@ eye_spy.code-workspace
 params.py
 requirements.txt
 setup.py
-Data/RFMiD_Testing_Labels.csv
-Data/RFMiD_Training_Labels.csv
-Data/RFMiD_Validation_Labels.csv
-Interface/__init__.py
-Interface/style.css
-Interface/api/api.py
 eye_spy_peekaboo_for_health.egg-info/PKG-INFO
 eye_spy_peekaboo_for_health.egg-info/SOURCES.txt
 eye_spy_peekaboo_for_health.egg-info/dependency_links.txt
 eye_spy_peekaboo_for_health.egg-info/not-zip-safe
 eye_spy_peekaboo_for_health.egg-info/requires.txt
 eye_spy_peekaboo_for_health.egg-info/top_level.txt
+interface/__init__.py
+interface/streamit_eye_app.py
 ml_logic/__init__.py
 ml_logic/data.py
 ml_logic/model.py
 ml_logic/preprocessor.py
 ml_logic/registry.py
+ml_logic/__pycache__/__init__.cpython-310.pyc
+ml_logic/__pycache__/preprocessor.cpython-310.pyc
 notebooks/Data_Balancing.ipynb
 notebooks/RFMi Images - General Data information .ipynb
 notebooks/image-preprocessing.ipynb
