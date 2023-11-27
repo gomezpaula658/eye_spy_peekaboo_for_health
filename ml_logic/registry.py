@@ -2,7 +2,6 @@ import os
 import time
 import pickle
 import glob
-
 #from colorama import Fore, Style
 from tensorflow import keras
 from params import *
@@ -18,8 +17,8 @@ def save_model(model: keras.Model = None) -> None:
     timestamp = time.strftime("%Y%m%d-%H%M%S")
 
     # Save model locally
-    model_path = os.path.join(LOCAL_REGISTRY_PATH, "model", f"{timestamp}.h5")
-    model.save(model_path)
+    model_path = os.path.join(LOCAL_REGISTRY_PATH, "models", f"{timestamp}.h5")
+    keras.models.save_model(model,model_path)
 
     print("✅ Model saved locally")
 
@@ -55,4 +54,4 @@ def load_model() -> keras.Model:
 
         print("✅ Model loaded from local disk")
 
-        return latest_model
+    return latest_model

@@ -5,7 +5,6 @@ from keras.callbacks import EarlyStopping
 import numpy as np
 from typing import Tuple
 from keras.callbacks import EarlyStopping
-from preprocessor import load_and_preprocess_images
 import pandas as pd
 
 
@@ -72,6 +71,6 @@ def train_model(model: Model,
     verbose=1
     )
 
-    #print(f"✅ Model trained on {len(X)} rows with min val MAE: {round(np.min(history.history['val_mae']), 2)}")
+    print(f"✅ Model trained !")
 
     return model, history
