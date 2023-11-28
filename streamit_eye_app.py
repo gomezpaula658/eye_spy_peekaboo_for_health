@@ -23,29 +23,32 @@ local_model_directory = os.path.join(LOCAL_REGISTRY_PATH, "models")
 local_model_paths = glob.glob(f"{local_model_directory}/*")
 
 
-#Read the files and get the images to train the model
-# train = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Training_Labels.csv').set_index('ID')
-# test = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Testing_Labels.csv').set_index('ID')
-# eval = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Validation_Labels.csv').set_index('ID')
 
-# X_train = train.drop(columns='Disease_Risk')
-# y_train = train['Disease_Risk']
-# X_eval  = eval.drop(columns='Disease_Risk')
-# y_eval = eval['Disease_Risk']
+if not local_model_paths:
 
-# image_folder = f'{LOCAL_DATA_PATH1}/training_images'
-# images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_train.index])
-# eval_image_folder = f'{LOCAL_DATA_PATH1}/eval_images'
-# eval_images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_eval.index])
+    #Read the files and get the images to train the model
+    train = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Training_Labels.csv').set_index('ID')
+    test = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Testing_Labels.csv').set_index('ID')
+    eval = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Validation_Labels.csv').set_index('ID')
 
-# #if not local_model_paths:
-    # learning_rate = 0.0005
-    # batch_size = 256
-    # patience = 2
-    # model = initialize_model((224, 224, 3))
-    # model = compile_model(model)
-    # model, history = train_model(model, images, y_train, batch_size=batch_size, patience=patience, validation_data=(eval_images, y_eval), validation_split=None)
-    # save_model(model)
+    X_train = train.drop(columns='Disease_Risk')
+    y_train = train['Disease_Risk']
+    X_eval  = eval.drop(columns='Disease_Risk')
+    y_eval = eval['Disease_Risk']
+
+    image_folder = f'{LOCAL_DATA_PATH1}/training_images'
+    images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_train.index])
+    eval_image_folder = f'{LOCAL_DATA_PATH1}/eval_images'
+    eval_images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_eval.index])
+
+
+    learning_rate = 0.0005
+    batch_size = 256
+    patience = 2
+    model = initialize_model((224, 224, 3))
+    model = compile_model(model)
+    model, history = train_model(model, images, y_train, batch_size=batch_size, patience=patience, validation_data=(eval_images, y_eval), validation_split=None)
+    save_model(model)
 
 
 
