@@ -76,7 +76,7 @@ with st.container():
     if uploaded_file is not None:
     # To read file as bytes:
         #bytes_data = uploaded_file.getvalue()
-        image = np.array(load_and_preprocess_images(99,f'{LOCAL_DATA_PATH1}/test_images'))
+        image = np.array(load_and_preprocess_images(uploaded_file.name.strip(".png"),f'{LOCAL_DATA_PATH1}/test_images'))
 
     submitted = st.button("Submit", key="submit_button")
 
