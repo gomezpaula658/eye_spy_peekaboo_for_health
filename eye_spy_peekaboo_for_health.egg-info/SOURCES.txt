@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 README.md
+=======
+.env
+.gitignore
+Makefile
+README.md
+eye_spy.code-workspace
+params.py
+requirements.txt
+>>>>>>> dd02d8e6a082703f0feb92af466ab215ee264dd5
 setup.py
 eye_spy_peekaboo_for_health.egg-info/PKG-INFO
 eye_spy_peekaboo_for_health.egg-info/SOURCES.txt
@@ -6,8 +16,24 @@ eye_spy_peekaboo_for_health.egg-info/dependency_links.txt
 eye_spy_peekaboo_for_health.egg-info/not-zip-safe
 eye_spy_peekaboo_for_health.egg-info/requires.txt
 eye_spy_peekaboo_for_health.egg-info/top_level.txt
+<<<<<<< HEAD
+=======
+interface/__init__.py
+interface/streamit_eye_app.py
+>>>>>>> dd02d8e6a082703f0feb92af466ab215ee264dd5
 ml_logic/__init__.py
 ml_logic/data.py
 ml_logic/model.py
 ml_logic/preprocessor.py
+<<<<<<< HEAD
 ml_logic/registry.py
+=======
+ml_logic/registry.py
+ml_logic/__pycache__/__init__.cpython-310.pyc
+ml_logic/__pycache__/preprocessor.cpython-310.pyc
+notebooks/Data_Balancing.ipynb
+notebooks/RFMi Images - General Data information .ipynb
+notebooks/image-preprocessing.ipynb
+notebooks/model_exploration.ipynb
+notebooks/test_data_visualization.ipynb
+>>>>>>> dd02d8e6a082703f0feb92af466ab215ee264dd5

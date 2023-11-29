@@ -23,25 +23,31 @@ local_model_directory = os.path.join(LOCAL_REGISTRY_PATH, "models")
 local_model_paths = glob.glob(f"{local_model_directory}/*")
 
 
-#Read the files and get the images to train the model
-train = pd.read_csv('../data/RFMiD_Training_Labels.csv').set_index('ID')
-test = pd.read_csv('../data/RFMiD_Testing_Labels.csv').set_index('ID')
-eval = pd.read_csv('../data/RFMiD_Validation_Labels.csv').set_index('ID')
-
-X_train = train.drop(columns='Disease_Risk')
-y_train = train['Disease_Risk']
-X_eval  = eval.drop(columns='Disease_Risk')
-y_eval = eval['Disease_Risk']
-
-image_folder = '../data/training_images'
-images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_train.index])
-eval_image_folder = '../data/eval_images'
-eval_images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_eval.index])
 
 if not local_model_paths:
+
+    #Read the files and get the images to train the model
+    train = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Training_Labels.csv').set_index('ID')
+    test = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Testing_Labels.csv').set_index('ID')
+    eval = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Validation_Labels.csv').set_index('ID')
+
+    X_train = train.drop(columns='Disease_Risk')
+    y_train = train['Disease_Risk']
+    X_eval  = eval.drop(columns='Disease_Risk')
+    y_eval = eval['Disease_Risk']
+
+    image_folder = f'{LOCAL_DATA_PATH1}/training_images'
+    images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_train.index])
+    eval_image_folder = f'{LOCAL_DATA_PATH1}/eval_images'
+    eval_images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_eval.index])
+
+
+    learning_rate = 0.0005
+    batch_size = 256
+    patience = 2
     model = initialize_model((224, 224, 3))
     model = compile_model(model)
-    model = train_model(images, y_train, validation_data=(eval_images, y_eval))
+    model, history = train_model(model, images, y_train, batch_size=batch_size, patience=patience, validation_data=(eval_images, y_eval), validation_split=None)
     save_model(model)
 
 
@@ -70,7 +76,7 @@ with st.container():
     if uploaded_file is not None:
     # To read file as bytes:
         #bytes_data = uploaded_file.getvalue()
-        image = load_and_preprocess_image_uploaded(uploaded_file)
+        image = np.array(load_and_preprocess_images(99,f'{LOCAL_DATA_PATH1}/test_images'))
 
     submitted = st.button("Submit", key="submit_button")
 
@@ -83,9 +89,3 @@ with st.container():
 
         #Display prediction result
         st.write(f"Prediction: {prediction_result}")
-
-        #st.markdown(f"<center><p>{st.write('Healthy')}</p></center>", unsafe_allow_html=True)
-        # st.write("Classifying...")
-        #call predict function from model
-        # label = predict(image)
-        # st.write('%s (%.2f%%)' % (label[1], label[2]*100))
