@@ -29,12 +29,12 @@ def load_and_preprocess_images(image_id, image_folder, target_size=(224, 224)):
 
 # Create a function to balance the data.
 def data_balancing(table_link='../data/'):
-    '''
+    """
     This function loads the raw data and returns a balanced dataset as two
     dictionaries.
-    '''
-    df = pd.read_csv(f'{table_link}RFMiD_Training_Labels.csv')
-    df_binary = df.loc[:, df.columns.intersection(['ID','Disease_Risk'])]
+    """
+    df = pd.read_csv(f'{table_link}RFMiD_Training_Labels.csv').set_index('ID')
+    df_binary = df.loc[:, df.columns.intersection(['Disease_Risk'])]
     df_healthy = df_binary[df.Disease_Risk == 0]
     df_unhealthy = df_binary[df.Disease_Risk == 1]
     df_unhealthy_rndselection = df_unhealthy.sample(n = 401)
@@ -52,7 +52,7 @@ def load_and_preprocess_image(image_id, image_folder, target_size=(224, 224)):
     image = image / 255.0
     return image
 
-def create_augmented_model(input_shape=(150, 150, 3)):
+def create_augmented_model(input_shape=(224, 224, 3)):
 
     """
     Image augmnetation function Layers
