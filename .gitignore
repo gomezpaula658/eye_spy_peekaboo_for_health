@@ -7,5 +7,6 @@ data/training_images
 projprog.ipynb
 .ipynb_checkpoints
 data
+eye_spy.code-workspace
 *.egg-info
 *.code-workspace
