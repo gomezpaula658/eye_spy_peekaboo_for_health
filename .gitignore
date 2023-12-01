@@ -9,3 +9,4 @@ projprog.ipynb
 data
 *.egg-info
 *.code-workspace
+**/__pycache__/**
