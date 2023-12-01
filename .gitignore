@@ -10,3 +10,4 @@ data
 eye_spy.code-workspace
 *.egg-info
 *.code-workspace
+**/__pycache__/**
