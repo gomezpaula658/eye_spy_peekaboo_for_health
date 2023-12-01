@@ -10,6 +10,7 @@ from ml_logic.registry import load_model
 from params import *
 from ml_logic.model import *
 from ml_logic.registry import *
+from keras.utils import load_img, img_to_array
 
 
 ## Front page of the app displaying a form for the doctor to enter the patient names
@@ -52,20 +53,22 @@ if not local_model_paths:
 
 
 
-def predict(image_processed):
+def pred(image_processed):
     """Display the result"""
     #checking that there is a model saved
     if not local_model_paths:
         return None
     else:
         model = load_model()
+        image_processed = image_processed.reshape((1,224,224,3))
         prediction_result = model.predict(image_processed)
         #getting class index with highest probability
-        first_probability, second_probability = prediction_result
-        if first_probability > second_probability:
-            return "Healthy"
-        else:
+        st.write(prediction_result)
+        print(prediction_result)
+        if prediction_result > 0.50:
             return "Unhealthy"
+        else:
+            return "Healthy"
 
 
 with st.container():
@@ -76,7 +79,8 @@ with st.container():
     if uploaded_file is not None:
     # To read file as bytes:
         #bytes_data = uploaded_file.getvalue()
-        image = np.array(load_and_preprocess_images(99,f'{LOCAL_DATA_PATH1}/test_images'))
+        image = load_and_preprocess_images(uploaded_file.name.strip(".png"),f'{LOCAL_DATA_PATH1}/test_images', target_size=(224, 224,3))
+
 
     submitted = st.button("Submit", key="submit_button")
 
@@ -85,7 +89,7 @@ with st.container():
         #code to show processing
         with st.spinner('Classifying...'):
             #perform prediction
-            prediction_result = predict(image)
+            prediction_result = pred(image)
 
         #Display prediction result
         st.write(f"Prediction: {prediction_result}")
