@@ -13,6 +13,7 @@ def load_and_preprocess_image_uploaded(uploaded_image):
     """
     image = Image.open(uploaded_image)
     image = img_to_array(image)
+    image = image.reshape(224, 224, 3)
     image = image / 255.0  # Normalize to [0, 1]
     return image
 
