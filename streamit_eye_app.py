@@ -70,6 +70,11 @@ def pred(image_processed):
         else:
             return "Healthy"
 
+#stage 2 - predict disease if eye is unhealthy
+def pred2(image_processed):
+    pass
+    #return prediction_result_stage2
+
 
 with st.container():
     st.markdown("<center><h1>Eye Spy</h1></center>", unsafe_allow_html=True)
@@ -93,3 +98,8 @@ with st.container():
 
         #Display prediction result
         st.write(f"Prediction: {prediction_result}")
+
+        #stage 2 - return disease prediction if eye is unhealthy
+        if prediction_result == "Unhealthy":
+            prediction_result_stage2 = pred2(image)
+            st.write(f"Anomalies: {prediction_result_stage2}")
