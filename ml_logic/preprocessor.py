@@ -1,13 +1,11 @@
 import os
 import numpy as np
-import tensorflow as tf
-from tensorflow import keras
-# from keras.preprocessing.image import img_to_array
-from keras.utils import img_to_array, load_img
-from PIL import Image
-from keras import Model, Sequential, layers, models
 import pandas as pd
-from keras.preprocessing import image
+import tensorflow
+from tensorflow.keras.utils import img_to_array, load_img
+from tensorflow.keras import Model, Sequential, layers, models
+from tensorflow.keras.preprocessing import image
+from PIL import Image
 
 def load_and_preprocess_image_uploaded(uploaded_image):
     """
@@ -55,10 +53,10 @@ def load_and_preprocess_image(image_id, image_folder, target_size=(224, 224)):
 
     return image
 
-def augment_images(images):
+def image_augmentation(images):
 
     data_augmentation = models.Sequential([
-    layers.Rescaling(1./255),
+    # layers.Rescaling(1./255),
     layers.RandomFlip("horizontal"),
     layers.RandomZoom(0.1),
     layers.RandomTranslation(0.2, 0.2),
@@ -67,11 +65,11 @@ def augment_images(images):
 
     # images = tf.expand_dims(images, 0)
 
-    images = data_augmentation(images)
+    augmented_images = data_augmentation(images)
 
     # images = tf.squeeze(images, 0)
 
-    return images
+    return augmented_images
 
 def create_model(shape=tuple):
 
