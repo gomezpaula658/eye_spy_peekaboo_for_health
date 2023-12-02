@@ -58,7 +58,7 @@ def image_augmentation(images):
     data_augmentation = models.Sequential([
     # layers.Rescaling(1./255),
     layers.RandomFlip("horizontal"),
-    layers.RandomZoom(0.1),
+    # layers.RandomZoom(0.1),
     layers.RandomTranslation(0.2, 0.2),
     layers.RandomRotation(0.1)
     ])
