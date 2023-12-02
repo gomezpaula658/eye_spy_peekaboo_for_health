@@ -9,3 +9,4 @@ projprog.ipynb
 eye_spy.code-workspace
 *.egg-info
 *.code-workspace
+ml_logic/__pycache__
