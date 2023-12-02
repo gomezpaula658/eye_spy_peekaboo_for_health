@@ -80,6 +80,7 @@ def create_model(shape=tuple):
     image_input = layers.Input(shape=shape)
 
     x = layers.Conv2D(32, (3, 3), activation='relu')(image_input)
+    x = layers.Conv2D(64, (3, 3), activation='relu')(x)
     x = layers.MaxPooling2D(2, 2)(x)
     x = layers.Flatten()(x)
 
