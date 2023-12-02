@@ -11,3 +11,4 @@ eye_spy.code-workspace
 *.egg-info
 *.code-workspace
 **/__pycache__/**
+ml_logic/__pycache__
