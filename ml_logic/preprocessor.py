@@ -1,12 +1,11 @@
 import os
 import numpy as np
-from tensorflow import keras
-# from keras.preprocessing.image import img_to_array
-from keras.utils import img_to_array, load_img
-from PIL import Image
-from keras import Model, Sequential, layers
 import pandas as pd
-from keras.preprocessing import image
+import tensorflow
+from tensorflow.keras.utils import img_to_array, load_img
+from tensorflow.keras import Model, Sequential, layers, models
+from tensorflow.keras.preprocessing import image
+from PIL import Image
 
 def load_and_preprocess_image_uploaded(uploaded_image):
     """
@@ -33,7 +32,11 @@ def data_balancing(table_link='../data/'):
     """
     This function loads the raw data and returns a balanced dataset as two
     dictionaries.
+<<<<<<< HEAD
+    '''
+=======
     """
+>>>>>>> main
     df = pd.read_csv(f'{table_link}RFMiD_Training_Labels.csv').set_index('ID')
     df_binary = df.loc[:, df.columns.intersection(['Disease_Risk'])]
     df_healthy = df_binary[df.Disease_Risk == 0]
@@ -47,23 +50,52 @@ def load_and_preprocess_image(image_id, image_folder, target_size=(224, 224)):
     """
     Load and preprocess an image given its ID.
     """
+
     image_path = os.path.join(image_folder, f'{image_id}.png')
     image = load_img(image_path, target_size=target_size)
     image = img_to_array(image)
     image = image / 255.0
+
     return image
 
+<<<<<<< HEAD
+def image_augmentation(images):
+
+    data_augmentation = models.Sequential([
+    # layers.Rescaling(1./255),
+    layers.RandomFlip("horizontal"),
+    # layers.RandomZoom(0.1),
+    layers.RandomTranslation(0.2, 0.2),
+    layers.RandomRotation(0.1)
+    ])
+
+    # images = tf.expand_dims(images, 0)
+
+    augmented_images = data_augmentation(images)
+
+    # images = tf.squeeze(images, 0)
+
+    return augmented_images
+
+def create_model(shape=tuple):
+=======
 def create_augmented_model(input_shape=(224, 224, 3)):
+>>>>>>> main
 
     """
     Image augmnetation function Layers
     """
 
-    model = Sequential()
-    model.add(layers.Rescaling(1./255, input_shape=input_shape))
-    model.add(layers.RandomFlip("horizontal"))
-    model.add(layers.RandomZoom(0.1))
-    model.add(layers.RandomTranslation(0.2, 0.2))
-    model.add(layers.RandomRotation(0.1))
+    image_input = layers.Input(shape=shape)
+
+    x = layers.Conv2D(32, (3, 3), activation='relu')(image_input)
+    x = layers.MaxPooling2D(2, 2)(x)
+    x = layers.Flatten()(x)
+
+    z = layers.Dense(12, activation='relu')(x)
+    z = layers.Dense(64, activation='relu')(z)
+    z = layers.Dense(1, activation='sigmoid')(z)
+
+    model = Model(inputs=image_input, outputs=z)
 
     return model
