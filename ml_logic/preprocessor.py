@@ -145,3 +145,32 @@ def disease_categorization(table_link='../data/', cut_off=80):
     df_unhealthy_top_others = pd.concat([df_unhealthy_top, df_others_indexID], axis=1)
 
     return df_unhealthy_top_others
+
+def num_cols(df):
+    """
+    This functions takes an input dataframe to output the number of its columns.
+    """
+    return df.shape[1]
+
+# Stage 2: Create a model to detect the disease.
+def create_model_stage2(shape=tuple, last_layer_neurons=int):
+
+    """
+    This functions takes an input shape and the number of neurons for the final
+    layer to output a model to categorize the disease in the given eye image.
+    """
+
+    image_input = layers.Input(shape=shape)
+
+    x = layers.Conv2D(32, (3, 3), activation='relu')(image_input)
+    x = layers.Conv2D(64, (3, 3), activation='relu')(x)
+    x = layers.MaxPooling2D(2, 2)(x)
+    x = layers.Flatten()(x)
+
+    z = layers.Dense(12, activation='relu')(x)
+    z = layers.Dense(64, activation='relu')(z)
+    z = layers.Dense(last_layer_neurons, activation='softmax')(z)
+
+    model = Model(inputs=image_input, outputs=z)
+
+    return model
