@@ -101,7 +101,7 @@ def disease_categorization(table_link='../data/', cut_off=80):
     an "others" category.
     """
 
-    df = pd.read_csv('../raw_data/RFMiD_Training_Labels.csv')
+    df = pd.read_csv('../data/RFMiD_Training_Labels.csv')
     df_unhealthy = df[df.Disease_Risk == 1]
     df_unhealthy_noID = df_unhealthy.set_index('ID')
     df_unhealthy_noRisk = df_unhealthy.drop(['Disease_Risk'], axis=1)
