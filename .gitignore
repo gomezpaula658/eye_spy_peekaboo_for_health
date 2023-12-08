@@ -7,8 +7,8 @@ data/training_images
 projprog.ipynb
 .ipynb_checkpoints
 data
-eye_spy.code-workspace
 *.egg-info
 *.code-workspace
-**/__pycache__/**
-ml_logic/__pycache__
+**/__pycache__/
+.env
+.envrc
