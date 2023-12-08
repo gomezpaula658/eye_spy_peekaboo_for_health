@@ -1,12 +1,9 @@
-raw_data/
 .DS_Store
-data/eval_images
 raw_data
+data/eval_images
 data/test_images
 data/training_images
-projprog.ipynb
 .ipynb_checkpoints
-data
 *.egg-info
 *.code-workspace
 **/__pycache__/

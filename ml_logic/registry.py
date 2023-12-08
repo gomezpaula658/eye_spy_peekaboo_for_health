@@ -17,13 +17,21 @@ def save_model(model: keras.Model = None) -> None:
     timestamp = time.strftime("%Y%m%d-%H%M%S")
 
     # Save model locally
-    model_path = os.path.join(LOCAL_REGISTRY_PATH, "models", f"{timestamp}.h5")
+    model_path = os.path.join(LOCAL_REGISTRY_PATH, f"{timestamp}.h5")
     keras.models.save_model(model,model_path)
 
     print("✅ Model saved locally")
 
-    return None
+    if MODEL_TARGET == 'gcs':
+        from google.cloud import storage
+        model_filename = model_path.split('/')[-1]
+        client = storage.Client()
+        bucket = client.bucket(BUCKET_NAME)
+        blob = bucket.blob (f'models/{model_filename}')
+        blob.upload_from_filename(model_path)
+        return None
 
+    return None
 
 def load_model() -> keras.Model:
     """
