@@ -44,7 +44,7 @@ if not local_model_paths:
 
 
     learning_rate = 0.0005
-    batch_size = 256
+    batch_size = 64
     patience = 2
     model = initialize_model((224, 224, 3))
     model = compile_model(model)
