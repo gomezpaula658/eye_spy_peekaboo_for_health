@@ -101,7 +101,7 @@ def disease_categorization(table_link='../data/', cut_off=80):
     an "others" category.
     """
 
-    df = pd.read_csv('../raw_data/RFMiD_Training_Labels.csv')
+    df = pd.read_csv(table_link)
     df_unhealthy = df[df.Disease_Risk == 1]
     df_unhealthy_noID = df_unhealthy.set_index('ID')
     df_unhealthy_noRisk = df_unhealthy.drop(['Disease_Risk'], axis=1)
@@ -174,3 +174,32 @@ def create_model_stage2(shape=tuple, last_layer_neurons=int):
     model = Model(inputs=image_input, outputs=z)
 
     return model
+
+# Stage 2: Create a function to categorize the diseases on validation dataset.
+def disease_cat_eval(table_link='../data/', disease_cat_df=pd.DataFrame):
+    """
+    This function loads the raw data and returns a dataframe of various diseases
+    with the number of instances above the cut off line and the rest grouped as
+    an "others" category.
+    """
+
+    sel_cols = disease_cat_df.columns
+    col_names = []
+    for columns in sel_cols:
+        col_names.append(columns)
+    col_names.remove('Others')
+
+    eval = pd.read_csv(table_link)
+    eval_unhealthy = eval[eval.Disease_Risk == 1]
+    eval_unhealthy_noID = eval_unhealthy.set_index('ID')
+    eval_unhealthy_noRisk = eval_unhealthy.drop(['Disease_Risk'], axis=1)
+    eval_unhealthy_noIDRisk = eval_unhealthy_noID.drop(['Disease_Risk'], axis=1)
+
+    eval_others_indexID = eval_unhealthy_noIDRisk.drop(col_names, axis=1)
+    eval_others_indexID['Others'] = eval_others_indexID.sum(axis=1)
+    eval_others_indexID = eval_others_indexID[['Others']]
+    eval_unhealthy_top= eval_unhealthy_noIDRisk[col_names]
+
+    eval_unhealthy_top_others = pd.concat([eval_unhealthy_top, eval_others_indexID], axis=1)
+
+    return eval_unhealthy_top_others
