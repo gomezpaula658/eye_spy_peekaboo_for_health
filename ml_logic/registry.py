@@ -58,7 +58,7 @@ def load_model() -> keras.Model:
 
         print(Fore.BLUE + f"\nLoad latest model from disk..." + Style.RESET_ALL)
 
-        latest_model = keras.models.load_model(most_recent_model_path_on_disk)
+        latest_model = keras.models.load_model("model_1.h5")
 
         print("✅ Model loaded from local disk")
 
