@@ -9,3 +9,4 @@ data/training_images
 **/__pycache__/
 .env
 .envrc
+models
