@@ -12,6 +12,7 @@ from ml_logic.model import *
 from ml_logic.registry import *
 from keras.utils import load_img, img_to_array
 from tensorflow import keras
+from tempfile import NamedTemporaryFile
 
 
 ## Front page of the app displaying a form for the doctor to enter the patient names
@@ -28,14 +29,18 @@ def pred(image_processed):
     st.write(prediction_result)
     print(prediction_result)
     if prediction_result > 0.50:
-        return "Healthy"
-    else:
         return "Unhealthy"
+    else:
+        return "Healthy"
 
 #stage 2 - predict disease if eye is unhealthy
 def pred2(image_processed):
-    pass
-    #return prediction_result_stage2
+    model1 = keras.models.load_model("models/model_2.h5")
+    image_processed = image_processed.reshape((1,224,224,3))
+    prediction_result1 = model1.predict(image_processed)
+    #getting class index with highest probability
+    st.write(prediction_result1)
+    print(prediction_result1)
 
 
 with st.container():
@@ -48,9 +53,12 @@ with st.container():
         #bytes_data = uploaded_file.getvalue()
         #image = load_and_preprocess_images(uploaded_file.name.strip(".png"),f'{LOCAL_DATA_PATH1}/test_images', target_size=(224, 224,3))
         #image_path = os.path.join(f'{LOCAL_DATA_PATH1}/test_images', f'{uploaded_file.name.strip(".png")}.png')
-        image_path = os.path.join('data/test_images', f'{uploaded_file.name.strip(".png")}.png')
-        image = load_img(image_path, target_size=(224,224,3))
-        image = img_to_array(image)
+        with NamedTemporaryFile(dir='.', suffix='.png') as f:
+            f.write(uploaded_file.getbuffer())
+            #image_path = os.path.join('data/test_images', f'{uploaded_file.name.strip(".png")}.png')
+            #image = load_img(image_path, target_size=(224,224,3))
+            image = load_img(f.name, target_size=(224,224,3))
+            image = img_to_array(image)
 
     submitted = st.button("Submit", key="submit_button")
 
