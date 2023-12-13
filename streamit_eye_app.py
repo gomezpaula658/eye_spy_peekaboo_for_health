@@ -40,8 +40,7 @@ def pred2(image_processed):
     prediction_result1 = model1.predict(image_processed)
     #getting class index with highest probability
     st.write(prediction_result1)
-    print(prediction_result1)
-
+    return prediction_result1
 
 with st.container():
     st.markdown("<center><h1>Eye Spy</h1></center>", unsafe_allow_html=True)
@@ -76,3 +75,17 @@ with st.container():
         if prediction_result == "Unhealthy":
             prediction_result_stage2 = pred2(image)
             st.write(f"Anomalies: {prediction_result_stage2}")
+            disease_list = ['DR', 'MH', 'DN', 'ODC', 'Others']
+            disease_dict = {
+                'DR':'Diabetic retinopathy is a microvascular complication of diabetes mellitus and is a leading cause of vision loss in the elderly and working population. The image is labeled as DR if it shows any of the following clinical findings: microaneurysms, retinal dot and blot hemorrhage, hard exudates or cotton wool spots.',
+                'MH':'Media Haze: The opacity of media can be a hallmark for the presence of cataracts, vitreous opacities, corneal edema or small pupils. Moreover, some other artifacts may be introduced as a result of acquisition procedures, such as eyelash artifacts and artifacts introduced by the instrument.',
+                'DN':'Drusens are yellow or white extracellular deposits located between the retinal pigment epithelium (RPE) and Bruch’s membrane. They naturally occur in the aged population. The presence of drusen is a hallmark and early sign of significant risk of age-related macular degeneration, geographic atrophy, choroidal neovascularization, and development of RPE abnormalities.',
+                'ODC':'Optic disc cupping is the thinning of neuroretinal rim such that optic disc appears excavated. Pathological ODC is generally referred to as glaucoma. However, several other non-glaucomatous diseases, such as arteritic anterior ischemic optic neuropathy and central retinal vein occlusion. Thus, it is very important to separately evaluate ODC.',
+                'Others':'The issue is none of the following: Diabetic retinopathy, Media Haze, Drusens, Optic disc cupping. Please visit an ophthalmologist.'
+                }
+            # st.write(prediction_result_stage2)
+            selected_class = np.argmax(prediction_result_stage2)
+            # st.write(selected_class)
+            st.write(f"Anomaly: **{disease_list[selected_class]}**")
+            st.write(f"\n")
+            st.write(f"{disease_dict[disease_list[selected_class]]}")
