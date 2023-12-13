@@ -42,7 +42,6 @@ def pred2(image_processed):
     st.write(prediction_result1)
     return prediction_result1
 
-
 with st.container():
     st.markdown("<center><h1>Eye Spy</h1></center>", unsafe_allow_html=True)
 
@@ -84,9 +83,9 @@ with st.container():
                     'ODC':'Optic disc cupping is the thinning of neuroretinal rim such that optic disc appears excavated. Pathological ODC is generally referred to as glaucoma. However, several other non-glaucomatous diseases, such as arteritic anterior ischemic optic neuropathy and central retinal vein occlusion. Thus, it is very important to separately evaluate ODC.',
                     'Others':'The issue is none of the following: Diabetic retinopathy, Media Haze, Drusens, Optic disc cupping. Please visit an ophthalmologist.'
                     }
-                st.write(prediction_result_stage2)
+                #st.write(prediction_result_stage2)
                 selected_class = np.argmax(prediction_result_stage2)
-                st.write(selected_class)
+                #st.write(selected_class)
                 st.write(f"Anomaly: **{disease_list[selected_class]}**")
                 st.write(f"\n")
                 st.write(f"{disease_dict[disease_list[selected_class]]}")
