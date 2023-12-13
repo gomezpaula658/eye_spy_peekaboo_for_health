@@ -11,70 +11,36 @@ from params import *
 from ml_logic.model import *
 from ml_logic.registry import *
 from keras.utils import load_img, img_to_array
+from tensorflow import keras
+from tempfile import NamedTemporaryFile
 
 
 ## Front page of the app displaying a form for the doctor to enter the patient names
 ## and upload their eye scan image. The interface then return the result i.e healthy/not Healthy.
 ## This function will return the downloaded image.
 
-#read css file
-# with open("style.css") as f:
-#     st.markdown(f'<style>{f.read()}</style', unsafe_allow_html=True)
-local_model_directory = os.path.join(LOCAL_REGISTRY_PATH, "models")
-local_model_paths = glob.glob(f"{local_model_directory}/*")
-
-
-
-if not local_model_paths:
-
-    #Read the files and get the images to train the model
-    train = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Training_Labels.csv').set_index('ID')
-    test = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Testing_Labels.csv').set_index('ID')
-    eval = pd.read_csv(f'{LOCAL_DATA_PATH1}/RFMiD_Validation_Labels.csv').set_index('ID')
-
-    X_train = train.drop(columns='Disease_Risk')
-    y_train = train['Disease_Risk']
-    X_eval  = eval.drop(columns='Disease_Risk')
-    y_eval = eval['Disease_Risk']
-
-    image_folder = f'{LOCAL_DATA_PATH1}/training_images'
-    images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_train.index])
-    eval_image_folder = f'{LOCAL_DATA_PATH1}/eval_images'
-    eval_images = np.array([load_and_preprocess_images(row_id, image_folder) for row_id in X_eval.index])
-
-
-    learning_rate = 0.0005
-    batch_size = 256
-    patience = 2
-    model = initialize_model((224, 224, 3))
-    model = compile_model(model)
-    model, history = train_model(model, images, y_train, batch_size=batch_size, patience=patience, validation_data=(eval_images, y_eval), validation_split=None)
-    save_model(model)
-
-
 
 def pred(image_processed):
     """Display the result"""
-    #checking that there is a model saved
-    if not local_model_paths:
-        return None
+    model = keras.models.load_model("models/model_1.h5")
+    image_processed = image_processed.reshape((1,224,224,3))
+    prediction_result = model.predict(image_processed)
+    #getting class index with highest probability
+    st.write(prediction_result)
+    print(prediction_result)
+    if prediction_result > 0.50:
+        return "Unhealthy"
     else:
-        model = load_model()
-        image_processed = image_processed.reshape((1,224,224,3))
-        prediction_result = model.predict(image_processed)
-        #getting class index with highest probability
-        st.write(prediction_result)
-        print(prediction_result)
-        if prediction_result > 0.50:
-            return "Unhealthy"
-        else:
-            return "Healthy"
+        return "Healthy"
 
 #stage 2 - predict disease if eye is unhealthy
 def pred2(image_processed):
-    pass
-    #return prediction_result_stage2
-
+    model1 = keras.models.load_model("models/model_2.h5")
+    image_processed = image_processed.reshape((1,224,224,3))
+    prediction_result1 = model1.predict(image_processed)
+    #getting class index with highest probability
+    st.write(prediction_result1)
+    return prediction_result1
 
 with st.container():
     st.markdown("<center><h1>Eye Spy</h1></center>", unsafe_allow_html=True)
@@ -84,8 +50,14 @@ with st.container():
     if uploaded_file is not None:
     # To read file as bytes:
         #bytes_data = uploaded_file.getvalue()
-        image = load_and_preprocess_images(uploaded_file.name.strip(".png"),f'{LOCAL_DATA_PATH1}/test_images', target_size=(224, 224,3))
-
+        #image = load_and_preprocess_images(uploaded_file.name.strip(".png"),f'{LOCAL_DATA_PATH1}/test_images', target_size=(224, 224,3))
+        #image_path = os.path.join(f'{LOCAL_DATA_PATH1}/test_images', f'{uploaded_file.name.strip(".png")}.png')
+        with NamedTemporaryFile(dir='.', suffix='.png') as f:
+            f.write(uploaded_file.getbuffer())
+            #image_path = os.path.join('data/test_images', f'{uploaded_file.name.strip(".png")}.png')
+            #image = load_img(image_path, target_size=(224,224,3))
+            image = load_img(f.name, target_size=(224,224,3))
+            image = img_to_array(image)
 
     submitted = st.button("Submit", key="submit_button")
 
@@ -103,3 +75,17 @@ with st.container():
         if prediction_result == "Unhealthy":
             prediction_result_stage2 = pred2(image)
             st.write(f"Anomalies: {prediction_result_stage2}")
+            disease_list = ['DR', 'MH', 'DN', 'ODC', 'Others']
+            disease_dict = {
+                'DR':'Diabetic retinopathy is a microvascular complication of diabetes mellitus and is a leading cause of vision loss in the elderly and working population. The image is labeled as DR if it shows any of the following clinical findings: microaneurysms, retinal dot and blot hemorrhage, hard exudates or cotton wool spots.',
+                'MH':'Media Haze: The opacity of media can be a hallmark for the presence of cataracts, vitreous opacities, corneal edema or small pupils. Moreover, some other artifacts may be introduced as a result of acquisition procedures, such as eyelash artifacts and artifacts introduced by the instrument.',
+                'DN':'Drusens are yellow or white extracellular deposits located between the retinal pigment epithelium (RPE) and Bruch’s membrane. They naturally occur in the aged population. The presence of drusen is a hallmark and early sign of significant risk of age-related macular degeneration, geographic atrophy, choroidal neovascularization, and development of RPE abnormalities.',
+                'ODC':'Optic disc cupping is the thinning of neuroretinal rim such that optic disc appears excavated. Pathological ODC is generally referred to as glaucoma. However, several other non-glaucomatous diseases, such as arteritic anterior ischemic optic neuropathy and central retinal vein occlusion. Thus, it is very important to separately evaluate ODC.',
+                'Others':'The issue is none of the following: Diabetic retinopathy, Media Haze, Drusens, Optic disc cupping. Please visit an ophthalmologist.'
+                }
+            # st.write(prediction_result_stage2)
+            selected_class = np.argmax(prediction_result_stage2)
+            # st.write(selected_class)
+            st.write(f"Anomaly: **{disease_list[selected_class]}**")
+            st.write(f"\n")
+            st.write(f"{disease_dict[disease_list[selected_class]]}")
